@@ -1,0 +1,134 @@
+PImage background;
+PImage zombie;
+
+class Zombie {
+  PVector loc;
+  PVector speed;
+  int health;
+  String name;
+  
+  Zombie(PVector loc, PVector speed, int health, String name) {
+    this.loc = loc;
+    this.speed = speed;
+    this.health = health;
+    this.name = name;
+  }
+  
+  void update() {
+    loc.add(speed);
+  }
+  
+  void draw() {
+    image(zombie, loc.x, loc.y, 50, 50);
+  }
+}
+
+class Plant {
+  PVector loc;
+  int health;
+  String name;
+  
+  Plant(PVector loc, int health, String name) {
+    this.loc = loc;
+    this.health = health;
+    this.name = name;
+  }
+}
+
+ArrayList<Zombie> zombies;
+
+void setup() {
+  size(650, 650);
+  String backgroundUrl = "https://vignette.wikia.nocookie.net/plantsvszombies/images/1/19/Day.jpg/revision/latest?cb=20100311021744";
+  background = loadImage(backgroundUrl, "jpg");
+  String quizUrl = "https://cdn3.iconfinder.com/data/icons/brain-games/1042/Quiz-Games.png";
+  zombie = loadImage(quizUrl, "png");
+  
+  // play button
+  noStroke();
+  fill(#FF0000);
+  rect(250, 480, 150, 75);
+  textSize(50);
+  fill(0);
+  text("PLAY", 265, 535);
+  
+  // how to play button
+  noStroke();
+  fill(#138D75);
+  rect(75, 350, 125, 50);
+  textSize(20);
+  fill(0);
+  text("How To Play", 77, 377);
+  
+  // tip button
+  noStroke();
+  fill(#A569BD);
+  rect(450, 350, 125, 50);
+  textSize(20);
+  fill(0);
+  text("Tips", 490, 377);
+  
+  int knowledge = 0;
+  
+  zombies = new ArrayList();
+  
+  for (int i = 0; i < 5; i++) {
+  float x = random(0, width);
+  float y = random(0, height);
+  PVector loc = new PVector(x, y);
+  PVector speed = new PVector(0, 0);
+  zombies.add(new Zombie(loc, speed, 10, "test"));
+ }
+}
+
+void draw() {
+}
+
+void mousePressed() {
+  
+  // checks when user clicks play
+  if((mouseX > 250) && (mouseX < 400) && (mouseY > 480) && (mouseY < 555)){
+    image(background, 0, 0, 650, 550);
+    // temporary text guide
+    textSize(30);
+    fill(0);
+    text("BUY PLANTS HERE (TEMP. TEXT)", 30, 600);
+    
+    void draw() {
+      if (frameCount % 60 == 0) {
+      float x = random(0, width);
+      float y = random(0, height);
+      PVector loc = new PVector(x, y);
+      
+      float dx = random(-5, 5);
+      float dy = random(-5, 5);
+      PVector speed = new PVector(dx, dy);
+      zombies.add(new Zombie(loc, speed, 10, "test"));
+      }
+    
+      for (int i = 0; i < zombies.size(); i++) {
+      zombies.get(i).update();
+      zombies.get(i).draw();
+      }
+    }
+  }
+}
+
+  // checks when user clicks how to play
+  if((mouseX > 75) && (mouseX < 200) && (mouseY > 350) && (mouseY < 400)){
+    background(255);
+    textSize(50);
+    fill(0);
+    text("How To Play:", 50, 100);
+    textSize(14);
+    fill(0);
+    text("- On the game screen, player can collect income that is spawned from the sky.", 50, 150);
+    text("- Player can plant different students that deal different amount of damage.", 50, 200);
+    text("- Player is to plan strategically and defend the students' brains from tests/quizzes", 50, 250);
+    text("- There are waves of tests/quizzes that player has to defeat in one day.",50, 300);
+    text("- Player can select and plant students from the bottom colume of the play screen.", 50, 350);
+    text("- Plants/students dies when tests/quizzes hits them for a certain number of times.", 50, 400);
+    text("- Player loses when tests/quizzes reach the end of the lane.", 50, 450);
+    text("- Player wins if they manage to survive through the wave.", 50, 500);
+  }
+}
